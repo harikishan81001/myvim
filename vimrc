@@ -13,8 +13,8 @@ filetype plugin indent on           " load file type plugins + indentation
 set nowrap                          " don't wrap lines
 set tabstop=4 shiftwidth=4          " a tab is two spaces (or set this to 4)
 set expandtab                       " use spaces, not tabs
-set backspace=indent,eol,start      " backspace through everything in insert mode
-set list
+"set backspace=indent,eol,start      " backspace through everything in insert mode
+"set list
 set term=screen-256color            " setting colors when vim is inside tmux
 " MacVim Settings
 :set guifont=Monaco:h12
@@ -38,17 +38,19 @@ set smartcase                       " ... unless they contain at least one capit
 "" Mappings
 nmap <F8> :TagbarToggle<CR>         " mapping f8 to TagbarToggle
 nmap <F2> :NERDTreeToggle<CR>       " mapping f2 to NERDTreeToggle
-nmap <F3> :NumbersToggle<CR>        " mapping f3 to NumbersToggle
-nmap <F4> :NumbersOnOff<CR>         " mapping f4 to NumbersOnOff
-noremap <F5> :GundoToggle<CR>       " mapping f5 to Gundo
+"nmap <F3> :NumbersToggle<CR>        " mapping f3 to NumbersToggle
+"nmap <F4> :NumbersOnOff<CR>         " mapping f4 to NumbersOnOff
+noremap <F6> :GundoToggle<CR>       " mapping f6 to Gundo
 noremap <F9> :Gcommit<CR>           " mapping f9 to Gcommit
 noremap! jj <Esc>                   "<Esc> to jj
+
+let g:pep8_map='<F5>'
 
 "" Mapping 
 let mapleader = ","                 " setting leader to , 
 
 "" Color Scheme
-colorscheme tomorrow_night          " Tomorrow Theme
+colorscheme emacs          " Tomorrow Theme
 
 " Disable Pylint on Save
 "let g:pymode_lint_write = 0         " python-mode
@@ -63,7 +65,7 @@ let g:Powerline_symbols = 'fancy'   " Powerline
 
 "SWAGG
 set relativenumber                           " setting line numbers
-set colorcolumn=81                           " line to show 81 character mark
+set colorcolumn=79                           " line to show 81 character mark
 set cursorline                               " shows the horizontal cursor line
 nmap <leader>ev :vsplit $MYVIMRC<cr>         " mapping to edit my vimrc quickly
 nmap <leader>sv :source $MYVIMRC<cr>         " mapping to source my vimrc quickly

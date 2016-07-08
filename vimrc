@@ -1,83 +1,88 @@
-" Copyright 2012 Mahdi Yusuf, all rights reserved.
+set nocompatible
+filetype off
 
-call pathogen#infect()              " adding pathogen to vimrc
-call pathogen#helptags()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-set nocompatible                    " choose no compatibility with legacy vi
-syntax enable
-set encoding=utf-8
-set showcmd                         " display incomplete commands
-filetype plugin indent on           " load file type plugins + indentation
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
 
-"" Whitespace
-set nowrap                          " don't wrap lines
-set tabstop=4 shiftwidth=4          " a tab is two spaces (or set this to 4)
-set expandtab                       " use spaces, not tabs
-"set backspace=indent,eol,start      " backspace through everything in insert mode
-"set list
-set term=screen-256color            " setting colors when vim is inside tmux
-" MacVim Settings
-:set guifont=Monaco:h12
+" The bundles you install will be listed here
 
-"Auto Commands
-:autocmd BufWrite *.py %retab                 " retab python files on write
-":autocmd BufWrite *.html :normal gg=G        " reindent html files on save
+filetype plugin indent on
 
-"Abbreviations
-:iabbrev @@     yusuf.mahdi@gmail.com
-:iabbrev ccopy  Copyright 2012 Mahdi Yusuf, all rights reserved.
-:iabbrev pdb    # XXX BREAKPOINT XXX <cr>import pdb; pdb.set_trace()
-:iabbrev ppython #!/usr/bin/env python <cr>#-*- coding: utf-8 -*-
+" The rest of your config follows here
 
-"" Searching
-set hlsearch                        " highlight matches
-set incsearch                       " incremental searching
-set ignorecase                      " searches are case insensitive...
-set smartcase                       " ... unless they contain at least one capital letter
 
-"" Mappings
-nmap <F8> :TagbarToggle<CR>         " mapping f8 to TagbarToggle
-nmap <F2> :NERDTreeToggle<CR>       " mapping f2 to NERDTreeToggle
-"nmap <F3> :NumbersToggle<CR>        " mapping f3 to NumbersToggle
-"nmap <F4> :NumbersOnOff<CR>         " mapping f4 to NumbersOnOff
-noremap <F6> :GundoToggle<CR>       " mapping f6 to Gundo
-noremap <F9> :Gcommit<CR>           " mapping f9 to Gcommit
-noremap! jj <Esc>                   "<Esc> to jj
+augroup vimrc_autocmds
+    autocmd!
+    " highlight characters past column 120
+    autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+    autocmd FileType python match Excess /\%79v.*/
+    autocmd FileType python set nowrap
+    augroup END
 
-let g:pep8_map='<F5>'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
-"" Mapping 
-let mapleader = ","                 " setting leader to , 
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
+set laststatus=2
 
-"" Color Scheme
-colorscheme emacs          " Tomorrow Theme
 
-" Disable Pylint on Save
-"let g:pymode_lint_write = 0         " python-mode
+Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/nerdtree'
 
-" Enable python folding
-let g:pymode_folding = 0            " python-mode
+map <F2> :NERDTreeToggle<CR>
 
-set laststatus=2                    " Always show the statusline
+Bundle 'klen/python-mode'
 
-" Enable fancy mode 
-let g:Powerline_symbols = 'fancy'   " Powerline
 
-"SWAGG
-set relativenumber                           " setting line numbers
-set colorcolumn=79                           " line to show 81 character mark
-set cursorline                               " shows the horizontal cursor line
-nmap <leader>ev :vsplit $MYVIMRC<cr>         " mapping to edit my vimrc quickly
-nmap <leader>sv :source $MYVIMRC<cr>         " mapping to source my vimrc quickly
+let g:pymode_rope = 1
 
-"Badass Functions
-function! OpenChangedFiles()
-  only " Close all windows, unless they're modified
-  let status = system('git status -s | grep "^ \?\(M\|A\|UU\)" | sed "s/^.\{3\}//"')
-  let filenames = split(status, "\n")
-  exec "edit " . filenames[0]
-  for filename in filenames[1:]
-    exec "sp " . filename
-  endfor
-endfunction
-command! OpenChangedFiles :call OpenChangedFiles()
+
+" Documentation
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
+
+
+"Linting
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+
+
+" Auto check on save
+let g:pymode_lint_write = 0
+
+
+" Support virtualenv
+let g:pymode_virtualenv = 1
+
+
+" Enable breakpoints plugin
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
+
+
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+let g:pymode_folding = 0
+
+
+
+" Others
+"set autochdir
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+if has ('gui_running')
+    highlight Pmenu guibg=#cccccc gui=bold
+endif
+
+
+map <C-z> <Esc>:tabprev<CR>
+map <C-x> <Esc>:tabnext<CR>
+map <C-n> <Esc>:tabe

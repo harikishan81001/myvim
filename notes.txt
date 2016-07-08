@@ -1,5 +1,0 @@
-# Font Instructions
-
-When you add fonts to powerline you need to change the setting in iterm not your vimrc file!
-
-Also when you are looking for font google vim-powerline fonts
